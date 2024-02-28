@@ -1,5 +1,5 @@
 // Responsables de los cuarteles (parcelas)
-const administradores = [
+export const administradores = [
   { id: 1, rut: "132254524", name: "JUAN TAPIA BURGOS" },
   { id: 2, rut: "143618668", name: "EFRAIN SOTO VERA" },
   { id: 3, rut: "78903228", name: "CARLOS PEREZ GONZALEZ" },
@@ -8,8 +8,9 @@ const administradores = [
   { id: 6, rut: "78684747", name: "JOAQUIN ANDRADE SANDOVAL" },
 ];
 
+
 // Tipo de cuartel, en el cual se utiliza el tipo de producto plantado
-const tipo_cuartel = [
+export const tipo_cuartel = [
   { id: 1, name: "PALTOS" },
   { id: 2, name: "AVELLANOS" },
   { id: 3, name: "CEREZAS" },
@@ -17,7 +18,7 @@ const tipo_cuartel = [
 ];
 
 // Un paddock representa un cuartel de un campo (Entiéndase también como potrero o parcela), el área está representada en m2, harvestYear es el año en el que se sembró el cuartel
-const cuarteles = [
+export const cuarteles = [
   {
     id_admin: 6,
     id_farm: 1,
@@ -181,7 +182,7 @@ const cuarteles = [
   },
 ];
 
-const granjas = [
+export const granjas = [
   { id: 1, name: "AGRICOLA SANTA ANA" },
   { id: 2, name: "VINA SANTA PAULA" },
   { id: 3, name: "FORESTAL Y AGRICOLA LO ENCINA" },
@@ -192,7 +193,8 @@ const granjas = [
 // INSERTAR VALORES A LA BASE DE DATOS EN SUS RESPECTIVAS TABLAS (HACERLO DIRECTAMENTE DESDE PGADMIN)
 
 // PUEDEN HACERLO MANIPULANDO LOS OBJETOS DIRECTAMENTE O HACERLO CON CONSULTAS SQL Y PROCESANDO LOS DATOS
-//1 Mostrar arreglo con los ruts y nombres de los administradores ordenados por nombre
+
+//?1 Mostrar arreglo con los ruts y nombres de los administradores ordenados por nombre
 
 //2 Arreglo con los nombres de cada tipo de cultivo, ordenados decrecientemente por la suma TOTAL de la cantidad de hectáreas plantadas de cada uno de ellos.
 
