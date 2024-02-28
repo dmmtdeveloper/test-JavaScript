@@ -190,13 +190,13 @@ export const granjas = [
 
 // Tip: Una hectárea equivale a 10.000m2
 
-// INSERTAR VALORES A LA BASE DE DATOS EN SUS RESPECTIVAS TABLAS (HACERLO DIRECTAMENTE DESDE PGADMIN)
+//! INSERTAR VALORES A LA BASE DE DATOS EN SUS RESPECTIVAS TABLAS (HACERLO DIRECTAMENTE DESDE PGADMIN)
 
-// PUEDEN HACERLO MANIPULANDO LOS OBJETOS DIRECTAMENTE O HACERLO CON CONSULTAS SQL Y PROCESANDO LOS DATOS
+// */ PUEDEN HACERLO MANIPULANDO LOS OBJETOS DIRECTAMENTE O HACERLO CON CONSULTAS SQL Y PROCESANDO LOS DATOS
 
-//?1 Mostrar arreglo con los ruts y nombres de los administradores ordenados por nombre
+//TODO1 Mostrar arreglo con los ruts y nombres de los administradores ordenados por nombre OK!!!!!
 
-//2 Arreglo con los nombres de cada tipo de cultivo, ordenados decrecientemente por la suma TOTAL de la cantidad de hectáreas plantadas de cada uno de ellos.
+//TODO2 Arreglo con los nombres de cada tipo de cultivo, ordenados decrecientemente por la suma TOTAL de la cantidad de hectáreas plantadas de cada uno de ellos.
 
 //3 Arreglo con nombres de los administradores de la FORESTAL Y AGRÍCOLA LO ENCINA, ordenados por nombre, que trabajen más de 1000 m2 de Cerezas
 
