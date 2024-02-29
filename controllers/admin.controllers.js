@@ -22,13 +22,16 @@ export const getAllAdmin = async (req, res) => {
   }
 };
 
+
+
+
 // 02 Arreglo con los nombres de cada tipo de cultivo, ordenados decrecientemente por la suma TOTAL de la cantidad de hectáreas plantadas de cada uno de ellos.
 export const getTipoCuartel = async (req, res) => {
   try {
     const { rows, rowCount } = await db.query(
-      "SELECT e.name, ROUND(SUM(qs.area/10000),3) AS total_area FROM tipo_cuartel e JOIN cuarteles qs ON id_paddock_type = e.id GROUP BY e.id, e.name ORDER BY total_area DESC"
+      "SELECT e.name, ROUND(SUM(qs.area/10000),3) AS hectarea FROM tipo_cuartel e JOIN cuarteles qs ON id_paddock_type = e.id GROUP BY e.id, e.name ORDER BY hectarea DESC"
     );
-    console.log("Tipo_Cuartel", rows, rowCount);
+    console.log("Tipo de cultivo y cantidad de hectareas", rows, rowCount);
     if (!rows.length)
       return res
         .status(404)
@@ -47,4 +50,35 @@ export const getTipoCuartel = async (req, res) => {
   }
 };
 
+
+
+
 // 03 Arreglo con nombres de los administradores de la FORESTAL Y AGRÍCOLA LO ENCINA, ordenados por nombre, que trabajen más de 1000 m2 de Cerezas
+export const getAdminForestalAgricola = async (req, res) => {
+  try {
+    const { rows, rowCount } = await db.query(
+      "SELECT a.name, SUM(c.area) AS area_total_cerezas FROM administradores a JOIN cuarteles c ON a.id = c.id_admin JOIN granjas g ON c.id_farm = g.id JOIN tipo_cuartel tc ON c.id_paddock_type = tc.id WHERE g.name = 'FORESTAL Y AGRICOLA LO ENCINA' AND tc.name = 'CEREZAS' AND c.area > 1000 GROUP BY a.id, a.name"  
+    );
+
+    console.log(`administradores de FORESTAL Y AGRICOLA`, rows);
+    if (!rows.length)
+      return res.status(404).json({
+        message:
+          "Error al intentar obtener los administradores de FORESTAL Y AGRÍCOLA LO ENCINA",
+      });
+    res.status(200).json({
+      tipo: rows,
+      count: rowCount,
+      message:
+        "Administradores de FORESTAL Y AGRÍCOLA LO ENCINA obtenidos con exito",
+    });
+  } catch (error) {
+    console.log(
+      `Error en nombres de administradores en FORESTAL Y AGRÍCOLA LO ENCINA ${error}`
+    );
+    res.status(500).json({
+      message:
+        "Hubo un error al internat obtener los nombres de los administradores de FORESTAL Y AGRÍCOLA LO ENCINA",
+    });
+  }
+};
