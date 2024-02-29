@@ -1,5 +1,6 @@
 import db from "../db/db.js";
 
+//01 Mostrar arreglo con los ruts y nombres de los administradores ordenados por nombre OK!!!!!
 export const getAllAdmin = async (req, res) => {
   try {
     const { rows, rowCount } = await db.query(
@@ -21,11 +22,11 @@ export const getAllAdmin = async (req, res) => {
   }
 };
 
+// 02 Arreglo con los nombres de cada tipo de cultivo, ordenados decrecientemente por la suma TOTAL de la cantidad de hectáreas plantadas de cada uno de ellos.
 export const getTipoCuartel = async (req, res) => {
   try {
     const { rows, rowCount } = await db.query(
-      "SELECT e.id, e.name, area FROM tipo_cuartel e JOIN cuarteles qs ON id_paddock_type = e.id "
-      
+      "SELECT e.name, ROUND(SUM(qs.area/10000),3) AS total_area FROM tipo_cuartel e JOIN cuarteles qs ON id_paddock_type = e.id GROUP BY e.id, e.name ORDER BY total_area DESC"
     );
     console.log("Tipo_Cuartel", rows, rowCount);
     if (!rows.length)
@@ -45,3 +46,5 @@ export const getTipoCuartel = async (req, res) => {
       .json({ message: "Error al intentar obtener el tipo de cuartel" });
   }
 };
+
+// 03 Arreglo con nombres de los administradores de la FORESTAL Y AGRÍCOLA LO ENCINA, ordenados por nombre, que trabajen más de 1000 m2 de Cerezas
