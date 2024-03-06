@@ -1,5 +1,10 @@
 import { Router } from "express";
-import { getAdminForestalAgricola, getAllAdmin, getTipoCuartel } from "../controllers/admin.controllers.js";
+import {
+  getAdminForestalAgricola,
+  getAllAdmin,
+  getTipoCuartel,
+  getYearCultivo,
+} from "../controllers/admin.controllers.js";
 
 const administradores = Router();
 
@@ -11,5 +16,8 @@ administradores.get("/getType", getTipoCuartel);
 
 //http://localhost:3001/api/admin/getAdminForestal
 administradores.get("/getAdminForestal", getAdminForestalAgricola);
+
+//http://localhost:3001/api/admin/getYear
+administradores.get("/getYear", getYearCultivo)
 
 export default administradores;

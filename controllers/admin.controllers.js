@@ -1,12 +1,15 @@
 import db from "../db/db.js";
 
-//01 Mostrar arreglo con los ruts y nombres de los administradores ordenados por nombre OK!!!!!
+/* //todo---------------------------------------------------------------->  Ejercicio 1 <-------------------------------------------------------------- 
+Mostrar arreglo con los ruts y nombres de los administradores ordenados por nombre */
 export const getAllAdmin = async (req, res) => {
   try {
     const { rows, rowCount } = await db.query(
       "SELECT rut, name FROM administradores ORDER BY name"
     );
+
     console.log("administradores", rows, rowCount);
+
     if (!rows.length)
       return res
         .status(404)
@@ -25,7 +28,8 @@ export const getAllAdmin = async (req, res) => {
 
 
 
-// 02 Arreglo con los nombres de cada tipo de cultivo, ordenados decrecientemente por la suma TOTAL de la cantidad de hectáreas plantadas de cada uno de ellos.
+/* //todo---------------------------------------------------------------->  Ejercicio 2 <-------------------------------------------------------------- 
+ Arreglo con los nombres de cada tipo de cultivo, ordenados decrecientemente por la suma TOTAL de la cantidad de hectáreas plantadas de cada uno de ellos.*/
 export const getTipoCuartel = async (req, res) => {
   try {
     const { rows, rowCount } = await db.query(
@@ -53,7 +57,8 @@ export const getTipoCuartel = async (req, res) => {
 
 
 
-// 03 Arreglo con nombres de los administradores de la FORESTAL Y AGRÍCOLA LO ENCINA, ordenados por nombre, que trabajen más de 1000 m2 de Cerezas
+/* //todo---------------------------------------------------------------->  Ejercicio 3 <-------------------------------------------------------------- 
+Arreglo con nombres de los administradores de la FORESTAL Y AGRÍCOLA LO ENCINA, ordenados por nombre, que trabajen más de 1000 m2 de Cerezas */
 export const getAdminForestalAgricola = async (req, res) => {
   try {
     const { rows, rowCount } = await db.query(
@@ -78,7 +83,31 @@ export const getAdminForestalAgricola = async (req, res) => {
     );
     res.status(500).json({
       message:
-        "Hubo un error al internat obtener los nombres de los administradores de FORESTAL Y AGRÍCOLA LO ENCINA",
+        "Hubo un error al intentar obtener los nombres de los administradores de FORESTAL Y AGRÍCOLA LO ENCINA",
     });
   }
 };
+
+/* //todo---------------------------------------------------------------->  Ejercicio 4 <-------------------------------------------------------------- 
+ Objeto en que las llaves (keys) sean el tipo de cultivo concatenado con su año de plantación (la concatenación tiene un separador de guión ‘-’, por ejemplo AVELLANOS-2020) y el valor otro objeto en el cual la clave sea el id del administrador y el valor el nombre del administrador
+ Ejemplo: { "AVELLANOS-2020": { 2: "EFRAIN SOTO VERA" } } */
+
+export const getYearCultivo = async (req, res) => {
+  try {
+    const { rows, rowCount } = await db.query(
+      "SELECT CONCAT(tc.name, '-', c.harvest_year) AS tipo_de_cultivo, json_object_agg(a.id, a.name) AS administradores FROM cuarteles c JOIN tipo_cuartel tc ON c.id_paddock_type = tc.id JOIN administradores a ON c.id_admin = a.id GROUP BY tc.name, c.harvest_year;"
+    );
+    console.log("Tipo de cultivo año mas administrador", rows)
+    if(!rows.length)
+    return res.status(404).json({message: "Error al intentar ontener los datos"})
+  res.status(200).json({
+    tipo: rows,
+    count: rowCount,
+    message: "Datos obtenidos con exito"
+  })
+  } catch (error) {
+    console.log(`Hubo un error al intentar obtener los datos ${error}`)
+    res.status(500).json({message: "Error"})
+  }
+}
+
